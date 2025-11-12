@@ -1,1 +1,31 @@
 
+# AZURE TEXT ANALYTICS SETUP GUIDE (BY YASH TAGUNDE)
+
+## STEP 1 — CREATE AZURE LANGUAGE RESOURCE
+az cognitiveservices account create \
+  --name YashTextAnalytics \
+  --resource-group IoTEdgeResources \
+  --kind TextAnalytics \
+  --sku F0 \
+  --location southeastasia
+
+# Get keys
+az cognitiveservices account keys list \
+  --name YashTextAnalytics \
+  --resource-group IoTEdgeResources -o json
+
+## STEP 2 — SET ENVIRONMENT VARIABLES
+export AZURE_LANGUAGE_KEY="YOUR_KEY_HERE"
+export AZURE_LANGUAGE_ENDPOINT="YOUR_ENDPOINT_HERE"
+
+## STEP 3 — INSTALL DEPENDENCIES
+pip install azure-ai-textanalytics
+
+## STEP 4 — CREATE SAMPLE TEXT FILE
+echo "Azure Cognitive Services are amazing and make AI easy to use." > sample_text.txt
+
+## STEP 5 — RUN SENTIMENT ANALYSIS
+python3 textsentiment.py sample_text.txt --out output_sentiment.txt
+
+## STEP 6 — VIEW OUTPUT
+cat output_sentiment.txt
